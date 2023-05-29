@@ -17,15 +17,20 @@ type SourceBlock struct {
 // Extract a source block from a certain block in st
 func ParseBlock(b string) (block SourceBlock) {
 	// Trim the backquotes and newlines
-	b = strings.Trim(b, "`")
+	b = strings.Trim(b, "` ")
 
 	var t, content string
 	hasType := true
+
+	// If the string starts with a new line, then is has no type
 	if b[0] == '\n' {
 		t = ""
 		hasType = false
 	}
 
+	// Strip the outer new line
+	b = strings.Trim(b, "\n")
+	
 	lines := strings.Split(b, "\n")
 	if hasType {
 		t = lines[0] // The first line is the type of block
