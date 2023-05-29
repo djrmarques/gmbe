@@ -1,8 +1,8 @@
 package main
 
 import (
-	"os"
 	"log"
+	"os"
 	"regexp"
 	"strings"
 )
@@ -16,16 +16,25 @@ type SourceBlock struct {
 
 // Extract a source block from a certain block in st
 func ParseBlock(b string) (block SourceBlock) {
-	// Trim the backquotes
-	b = strings.Trim(b, "`\n")
+	// Trim the backquotes and newlines
+	b = strings.Trim(b, "`")
 
-	// Get the block type from the first line
+	var t, content string
+	hasType := true
+	if b[0] == '\n' {
+		t = ""
+		hasType = false
+	}
+
 	lines := strings.Split(b, "\n")
-	t := lines[0]
-	content := strings.Join(lines[1:], "\n")
+	if hasType {
+		t = lines[0] // The first line is the type of block
+		lines = lines[1:]
+	}
+	content = strings.Join(lines, "\n")
 	block = SourceBlock{t, content}
 	return
-	
+
 }
 
 // Given a file, extract all source blocks
