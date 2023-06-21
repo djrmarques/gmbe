@@ -2,6 +2,8 @@ package main
 
 import (
 	"testing"
+	"path/filepath"
+	"reflect"
 )
 
 const TestString1 = "Text Here \n```yml\nSomeText\nMoreText\n```\nMore Text here"
@@ -26,23 +28,28 @@ func TestParseBlock2(t *testing.T) {
 	}
 }
 
-// func TestExtractBlocksFromStr(t *testing.T) {
-// }
+func TestExtractBlocksFromStr(t *testing.T) {
+	blocks, _ := ExtractBlocks([]byte(TestString1))
+	if len(blocks) != 1 {
+		t.Errorf("Expected 1 blocks, but found %d", len(blocks))
+	}
+	
+}
 
-// func TestExtractBlocksFromFile(t *testing.T) {
-// 	var result [2]SourceBlock
-// 	result[0] = SourceBlock{t: "teser", content: "asd"}
-// 	result[1] = SourceBlock{t: "teser", content: "asd"}
+func TestExtractBlocksFromFile(t *testing.T) {
+	var result [2]SourceBlock
+	result[0] = SourceBlock{t: "python", content: "Python code line 1\n Python code line 2"}
+	result[1] = SourceBlock{t: "yaml", content: "something:\n - here\n - here"}
 
-// 	path := filepath.Join(".", "test", "fixtures", "test.md")
-// 	blocks, err := ExtractBlocksFromFile(path)
-// 	if err != nil {
-// 		t.Error("Found error")
-// 	}
+	path := filepath.Join(".", "test", "fixtures", "test.md")
+	blocks, err := ExtractBlocksFromFile(path)
+	if err != nil {
+		t.Error("Found error")
+	}
 
-// 	for i := range result {
-// 		if result[i] != blocks[i] {
-// 			t.Error("Results do not match")			
-// 		}
-// 	}
-//}
+	for i := range result {
+		if reflect.DeepEqual(result[i],  blocks[i]) {
+			t.Errorf("Results do not match. Expected: %+v but found %+v", result[i], blocks[i])			
+		}
+	}
+}

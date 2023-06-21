@@ -7,8 +7,6 @@ import (
 	"strings"
 )
 
-const BlockRegex = "```.*```"
-
 // Contains one code block
 type SourceBlock struct {
 	t, content string
@@ -42,13 +40,12 @@ func ParseBlock(b string) (block SourceBlock) {
 
 }
 
-// Given a file, extract all source blocks
+// Given a file, exctract all source blocks
 func ExtractBlocks(f []byte) (blocks []SourceBlock, err error) {
-	re := regexp.MustCompile(BlockRegex)
+	re := regexp.MustCompile("```[\\w\\W]*?```")
 	var s SourceBlock
 	for _, m := range re.FindAll(f, -1) {
-		log.Println(m)
-		s = SourceBlock{t: "asda", content: "sdad"}
+		s = ParseBlock(string(m))
 		blocks = append(blocks, s)
 	}
 	return
@@ -57,6 +54,13 @@ func ExtractBlocks(f []byte) (blocks []SourceBlock, err error) {
 // Extracts all code blocks from a given file
 func ExtractBlocksFromFile(filePath string) (blocks []SourceBlock, err error) {
 	data, err := os.ReadFile(filePath)
-	blocks = append(blocks, SourceBlock{t: "asda", content: string(data)})
+	if err != nil {
+		log.Printf("Could not read file %s", filePath)
+	}
+	blocks, err = ExtractBlocks(data)
+	if err != nil {
+		log.Printf("Failed to extract blocks on file %s", filePath)
+	}
+
 	return
 }
