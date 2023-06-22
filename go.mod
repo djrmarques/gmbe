@@ -1,4 +1,4 @@
-module extractor
+module "https://github.com/djrmarques/go-md-block-extrator"
 
 go 1.20
 

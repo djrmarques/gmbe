@@ -41,7 +41,7 @@ It's also possible to join all the codeblocks of the same type inside the same f
 grbe -j Readme.md # This will join all code blocks of the same
 ```
 
-Finally, this tool can also run recursively
+Finally, this tool can also run recursively.
 
 ``` sh
 grbe -R .
