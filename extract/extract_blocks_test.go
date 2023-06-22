@@ -1,4 +1,4 @@
-package main
+package extract
 
 import (
 	"testing"
@@ -14,7 +14,7 @@ const TestBlock2 = "```\nwtv\n```"
 // Tests if it is converting source blocks correctly
 func TestParseBlock1(t *testing.T) {
 	block := ParseBlock(TestBlock1)
-	result := SourceBlock{t: "yml", content: "wtv"}
+	result := SourceBlock{T: "yml", Content: "wtv"}
 	if block != result {
 		t.Fatalf("Blocks do not match. Expected %v but got %+v", result, block)
 	}
@@ -22,7 +22,7 @@ func TestParseBlock1(t *testing.T) {
 
 func TestParseBlock2(t *testing.T) {
 	block := ParseBlock(TestBlock2)
-	result := SourceBlock{t: "", content: "wtv"}
+	result := SourceBlock{T: "", Content: "wtv"}
 	if block != result {
 		t.Fatalf("Blocks do not match. Expected %v but got %+v", result, block)
 	}
@@ -38,8 +38,8 @@ func TestExtractBlocksFromStr(t *testing.T) {
 
 func TestExtractBlocksFromFile(t *testing.T) {
 	var result [2]SourceBlock
-	result[0] = SourceBlock{t: "python", content: "Python code line 1\n Python code line 2"}
-	result[1] = SourceBlock{t: "yaml", content: "something:\n - here\n - here"}
+	result[0] = SourceBlock{T: "python", Content: "Python code line 1\n Python code line 2"}
+	result[1] = SourceBlock{T: "yaml", Content: "something:\n - here\n - here"}
 
 	path := filepath.Join(".", "test", "fixtures", "test.md")
 	blocks, err := ExtractBlocksFromFile(path)

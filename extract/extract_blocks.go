@@ -1,4 +1,4 @@
-package main
+package extract
 
 import (
 	"log"
@@ -9,7 +9,7 @@ import (
 
 // Contains one code block
 type SourceBlock struct {
-	t, content string
+	T, Content string
 }
 
 // Extract a source block from a certain block in st
