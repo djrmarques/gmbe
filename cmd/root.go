@@ -32,7 +32,7 @@ to quickly create a Cobra application.`,
 		o, _ := flags.GetString("output-path")
 
 		// Check if a file exists
-		if f_exists, _ := ValidateFileExists(f); !f_exists {
+		if fExists, _ := ValidateFileExists(f); !fExists {
 			log.Fatalf("File %s does not exist", f)
 		}
 
@@ -40,33 +40,39 @@ to quickly create a Cobra application.`,
 		blocks, _ := extract.ExtractBlocksFromFile(f)
 
 		// Builds the path to the output file
-		base_dir, file_name := GetFileBaseFolderAndName(f)
+		baseDir, file_name := GetFileBaseFolderAndName(f)
 
 		if o != "" {
-			base_dir = o
+			baseDir = o
 		}
 
-		full_output_path := filepath.Join(base_dir, file_name)
+		outputFolder := filepath.Join(baseDir, file_name)
+		err := CreateFolderIfNotExist(outputFolder)
+		if err != nil {
+			log.Fatalf("Failed to create folder %s. %s", outputFolder, err)
+		}
 
 		// Save each block in the respective file
-		counter_languages_block := make(map[string]uint)
+		// Keeps track of how many blocks of each type
+		// are in a file
+		counterLanguesBlock := make(map[string]uint)
 		for _, b := range blocks {
 
-			if val, ok := counter_languages_block[b.T]; ok {
-				counter_languages_block[b.T] = val + 1
+			if val, ok := counterLanguesBlock[b.T]; ok {
+				counterLanguesBlock[b.T] = val + 1
 			} else {
-				counter_languages_block[b.T] = 1
+				counterLanguesBlock[b.T] = 1
 			}
 			
-			block_type_n := counter_languages_block[b.T]
+			blockTypeN := counterLanguesBlock[b.T]
 			
-			block_extention := LanguageExtensions[b.T]
-			new_file_name := b.T + "_" + strconv.FormatUint(uint64(block_type_n), 10) + block_extention
-			full_path_to_file := filepath.Join(full_output_path, new_file_name)
+			blockExtention := LanguageExtensions[b.T]
+			outputFileName := b.T + "_" + strconv.FormatUint(uint64(blockTypeN), 10) + blockExtention
+			outputFilePath := filepath.Join(outputFolder, outputFileName)
 
-			err := ioutil.WriteFile(full_path_to_file, []byte(b.Content), 0644)
+			err := ioutil.WriteFile(outputFilePath, []byte(b.Content), 0644)
 			if err != nil {
-				log.Fatalf("Error writing to file: %s: %s", full_path_to_file, err)
+				log.Fatalf("Error writing to file: %s: %s", outputFilePath, err)
 			}
 		}
 	},
