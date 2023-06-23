@@ -5,12 +5,12 @@ package cmd
 
 import (
 	"os"
-	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/djrmarques/go-md-block-extrator/extract"
 	"path/filepath"
 	"io/ioutil"
 	"strconv"
+	"log"
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -33,7 +33,7 @@ to quickly create a Cobra application.`,
 
 		// Check if a file exists
 		if f_exists, _ := ValidateFileExists(f); !f_exists {
-			fmt.Errorf("File %s does not exist", f)
+			log.Fatalf("File %s does not exist", f)
 		}
 
 		// Get blocks from files
@@ -66,8 +66,7 @@ to quickly create a Cobra application.`,
 
 			err := ioutil.WriteFile(full_path_to_file, []byte(b.Content), 0644)
 			if err != nil {
-				fmt.Println("Error writing to file:", err)
-				return
+				log.Fatalf("Error writing to file: %s: %s", full_path_to_file, err)
 			}
 		}
 	},
