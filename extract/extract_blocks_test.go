@@ -41,7 +41,7 @@ func TestExtractBlocksFromFile(t *testing.T) {
 	result[0] = SourceBlock{T: "python", Content: "Python code line 1\n Python code line 2"}
 	result[1] = SourceBlock{T: "yaml", Content: "something:\n - here\n - here"}
 
-	path := filepath.Join(".", "test", "fixtures", "test.md")
+	path := filepath.Join("..", "test", "fixtures", "test.md")
 	blocks, err := ExtractBlocksFromFile(path)
 	if err != nil {
 		t.Error("Found error")

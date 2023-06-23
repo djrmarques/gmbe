@@ -6,7 +6,7 @@ package cmd
 import (
 	"os"
 	"github.com/spf13/cobra"
-	"github.com/djrmarques/go-md-block-extrator/extract"
+	"github.com/djrmarques/gmbe/extract"
 	"path/filepath"
 	"strconv"
 	"log"
