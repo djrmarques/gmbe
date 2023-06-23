@@ -10,7 +10,7 @@ First, install the [go programming language](https://go.dev/doc/install).
 Then run:
 
 ```sh
-go install github.com/djrmarques/gmbe
+go install github.com/djrmarques/gmbe@latest
 ```
 
 Verify installation with
