@@ -31,9 +31,11 @@ to quickly create a Cobra application.`,
 		o, _ := flags.GetString("output-path")
 
 		// Check if a file exists
-		if fExists, _ := ValidateFileExists(f); !fExists {
+		fExists, err := ValidateFileExists(f)
+		if !fExists {
 			log.Fatalf("File %s does not exist", f)
 		}
+		FailIfError(err)
 
 		// Get blocks from files
 		blocks, _ := extract.ExtractBlocksFromFile(f)
