@@ -4,6 +4,7 @@ import (
 	"os"
 	"fmt"
 	"path/filepath"
+	"log"
 )
 
 var LanguageExtensions = map[string]string{
@@ -81,4 +82,10 @@ func CreateEmptyFile(filePath string) error {
 	}
 	defer file.Close()
 	return nil
+}
+
+func FailIfError(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
 }

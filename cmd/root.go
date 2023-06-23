@@ -47,10 +47,7 @@ to quickly create a Cobra application.`,
 		}
 
 		outputFolder := filepath.Join(baseDir, file_name)
-		err := CreateFolderIfNotExist(outputFolder)
-		if err != nil {
-			log.Fatalf("Failed to create folder %s. %s", outputFolder, err)
-		}
+		FailIfError(CreateFolderIfNotExist(outputFolder))
 
 		// Save each block in the respective file
 		// Keeps track of how many blocks of each type
@@ -70,10 +67,7 @@ to quickly create a Cobra application.`,
 			outputFileName := b.T + "_" + strconv.FormatUint(uint64(blockTypeN), 10) + blockExtention
 			outputFilePath := filepath.Join(outputFolder, outputFileName)
 			CreateEmptyFile(outputFilePath)
-			err := ioutil.WriteFile(outputFilePath, []byte(b.Content), 0644)
-			if err != nil {
-				log.Fatalf("Error writing to file: %s: %s", outputFilePath, err)
-			}
+			FailIfError(ioutil.WriteFile(outputFilePath, []byte(b.Content), 0644))
 		}
 	},
 }
