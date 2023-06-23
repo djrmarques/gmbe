@@ -1,29 +1,31 @@
-# Go Readme Block Exporter
+# Go Markdown Block Exporter
 Cli tool to extract code blocks from Readme files, saves them onto separate files.
 
 # Why
 This tools makes it easy to check code blocks inside markdown files. 
 
 # Instalation
-Install the [go programming language](https://go.dev/doc/install). 
-Afterwards run:
+First, install the [go programming language](https://go.dev/doc/install). 
+
+Then run:
 
 ```sh
-go get asdasd
+go install github.com/djrmarques/gmbe
 ```
 
- Verify installation with
+Verify installation with
  
  ```sh
-grbe --help
+gmbe --help
  ```
+ 
  
 # Usage
 
 Use the following command:
 
 ```sh
-grbe Readme.md
+gmbe -f Readme.md
 ```
 
 This command will create a folder called `Readme`, and inside there will be files with the code blocks.
@@ -33,18 +35,13 @@ There are a few usage flags that can be used:
 
 It's possible to specify the output folder with:
 ``` sh
-grbe -o folder Readme.md # This will save the files inside this folder
+gmbe -o folder -f Readme.md # This will save the files inside this folder
 ```
 
 It's also possible to join all the codeblocks of the same type inside the same file
 ``` sh
-grbe -j Readme.md # This will join all code blocks of the same
+gmbe -j -f Readme.md # This will join all code blocks of the same type in the same file
 ```
 
-Finally, this tool can also run recursively.
-
-``` sh
-grbe -R .
-```
 
 
