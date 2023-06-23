@@ -69,7 +69,7 @@ to quickly create a Cobra application.`,
 			blockExtention := LanguageExtensions[b.T]
 			outputFileName := b.T + "_" + strconv.FormatUint(uint64(blockTypeN), 10) + blockExtention
 			outputFilePath := filepath.Join(outputFolder, outputFileName)
-
+			CreateEmptyFile(outputFilePath)
 			err := ioutil.WriteFile(outputFilePath, []byte(b.Content), 0644)
 			if err != nil {
 				log.Fatalf("Error writing to file: %s: %s", outputFilePath, err)

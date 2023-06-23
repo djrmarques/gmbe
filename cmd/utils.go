@@ -72,3 +72,13 @@ func GetFileBaseFolderAndName(filePath string) (string, string) {
 	fileNameWithoutExt := fileName[:len(fileName)-len(filepath.Ext(fileName))]
 	return baseFolder, fileNameWithoutExt
 }
+
+
+func CreateEmptyFile(filePath string) error {
+	file, err := os.Create(filePath)
+	if err != nil {
+		return fmt.Errorf("failed to create file: %v", err)
+	}
+	defer file.Close()
+	return nil
+}
