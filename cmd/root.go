@@ -8,7 +8,6 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/djrmarques/go-md-block-extrator/extract"
 	"path/filepath"
-	"io/ioutil"
 	"strconv"
 	"log"
 )
@@ -67,7 +66,7 @@ to quickly create a Cobra application.`,
 			outputFileName := b.T + "_" + strconv.FormatUint(uint64(blockTypeN), 10) + blockExtention
 			outputFilePath := filepath.Join(outputFolder, outputFileName)
 			CreateEmptyFile(outputFilePath)
-			FailIfError(ioutil.WriteFile(outputFilePath, []byte(b.Content), 0644))
+			FailIfError(WriteStringToFile(outputFilePath, b.Content))
 		}
 	},
 }

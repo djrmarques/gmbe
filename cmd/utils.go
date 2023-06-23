@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"path/filepath"
 	"log"
+	"io/ioutil"
 )
 
 var LanguageExtensions = map[string]string{
@@ -88,4 +89,13 @@ func FailIfError(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func WriteStringToFile(filePath string, content string) error {
+	err := ioutil.WriteFile(filePath, []byte(content), 0644)
+	if err != nil {
+		return fmt.Errorf("failed to write to file: %v", err)
+	}
+	fmt.Println("Content written to file:", filePath)
+	return nil
 }
