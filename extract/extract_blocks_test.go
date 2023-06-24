@@ -6,6 +6,8 @@ import (
 	"testing"
 )
 
+const TestString1 = "Text Here \n```yml\nSomeText\nMoreText\n```\nMore Text here"
+const TestString2 = "Text Here \n```\nSomeText\nMoreText\n```\nMore Text here"
 const TestBlock1 = "```yml\nwtv\n```"
 const TestBlock2 = "```\nwtv\n```"
 
@@ -18,17 +20,43 @@ func blockIsEqual(b1, b2 SourceBlock) (isEqual bool, err error) {
 	var tErrM, cErrM string
 
 	if !tEqual {
-		tErrM = fmt.Sprintf("Block Type not Equal. %s != %s.", b1.T, b2.T)
+		tErrM = fmt.Sprintf("Block Type not Equal:\n%s \n!=\n%s", b1.T, b2.T)
 	}
 
 	if !cEqual {
-		cErrM = fmt.Sprintf("Block content not equal. %s != %s.", b1.Content, b2.Content)
+		cErrM = fmt.Sprintf("Block content not equal:\n%s !=\n%s", b1.Content, b2.Content)
 	}
 
 	err = fmt.Errorf(tErrM + cErrM)
 	return
 }
 
+
+func TestExtractBlocksFromStr1(t *testing.T) {
+	result := SourceBlock{T: "yml", Content: "SomeText\nMoreText"}
+	blocks, _ := ExtractBlocks([]byte(TestString1))
+	if len(blocks) != 1 {
+		t.Errorf("Expected 1 blocks, but found %d", len(blocks))
+	}
+	be, err := blockIsEqual(result, blocks[0])
+	if !be {
+		t.Error(err)
+	}
+
+}
+
+func TestExtractBlocksFromStr2(t *testing.T) {
+	result := SourceBlock{T: "", Content: "SomeText\nMoreText"}
+	blocks, _ := ExtractBlocks([]byte(TestString2))
+	if len(blocks) != 1 {
+		t.Errorf("Expected 1 blocks, but found %d", len(blocks))
+	}
+	be, err := blockIsEqual(result, blocks[0])
+	if !be {
+		t.Error(err)
+	}
+
+}
 
 // Tests if it is converting source blocks correctly
 func TestParseBlock1(t *testing.T) {
