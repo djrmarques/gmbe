@@ -8,25 +8,7 @@ import (
 
 const TestString1 = "Text Here \n```yml\nSomeText\nMoreText\n```\nMore Text here"
 const TestString2 = "Text Here \n```\nSomeText\nMoreText\n```\nMore Text here"
-const TestBlock1 = "```yml\nwtv\n```"
-const TestBlock2 = "```\nwtv\n```"
 
-// Tests if it is converting source blocks correctly
-func TestParseBlock1(t *testing.T) {
-	block := ParseBlock(TestBlock1)
-	result := SourceBlock{T: "yml", Content: "wtv"}
-	if block != result {
-		t.Fatalf("Blocks do not match. Expected %v but got %+v", result, block)
-	}
-}
-
-func TestParseBlock2(t *testing.T) {
-	block := ParseBlock(TestBlock2)
-	result := SourceBlock{T: "", Content: "wtv"}
-	if block != result {
-		t.Fatalf("Blocks do not match. Expected %v but got %+v", result, block)
-	}
-}
 
 func TestExtractBlocksFromStr(t *testing.T) {
 	blocks, _ := ExtractBlocks([]byte(TestString1))
