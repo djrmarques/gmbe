@@ -29,6 +29,7 @@ to quickly create a Cobra application.`,
 		flags := cmd.Flags()
 		f, _ := flags.GetString("file")
 		o, _ := flags.GetString("output-path")
+		j, _ := flags.GetBool("join-blocks")
 
 		// Check if a file exists
 		fExists, err := ValidateFileExists(f)
@@ -38,7 +39,7 @@ to quickly create a Cobra application.`,
 		FailIfError(err)
 
 		// Get blocks from files
-		blocks, _ := extract.ExtractBlocksFromFile(f)
+		blocks, _ := extract.ExtractBlocksFromFile(f, j)
 
 		// Builds the path to the output file
 		baseDir, file_name := GetFileBaseFolderAndName(f)
@@ -92,6 +93,7 @@ func init() {
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	rootCmd.Flags().StringP("file", "f", "", "The file to parse")
+	rootCmd.Flags().BoolP("join-blocks", "j", false, "Join blocks of the same type on the same file")
 	rootCmd.Flags().StringP("output-path", "o", "", "Where to store the code blocks.")
 }
 
