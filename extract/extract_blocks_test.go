@@ -115,8 +115,8 @@ func TestConcatenateBlocks(t *testing.T) {
 	result[2] = SourceBlock{T: "python", Content: " pythoncode2"}
 
 	concatenatedResults := ConcatenateBlocks(result[:])
-	if len(concatenatedResults) != 2 {
-		t.Error("Length must be 2")
+	if nRes := len(concatenatedResults); nRes != 2 {
+		t.Errorf("Length must be 2 but got %d", nRes)
 	}
 	
 
