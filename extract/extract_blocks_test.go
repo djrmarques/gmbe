@@ -71,9 +71,11 @@ func TestExtractBlocksFromFileSingle(t *testing.T) {
 
 	for i, r := range result {
 		b := blocks[i]
-		if b.T != r.T || b.Content != r.Content {
-			t.Errorf("Results do not match. Expected:\n%+v\n but found \n%+v", result[i], blocks[i])			
+		be, err := blockIsEqual(r, b)
+		if !be {
+			t.Error(err)
 		}
+
 	}
 }
 
