@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-const TestString1 = "Text Here \n```yml\nSomeText\nMoreText\n```\nMore Text here"
-const TestString2 = "Text Here \n```\nSomeText\nMoreText\n```\nMore Text here"
+const TestString1 = "Text Here\n```yml\nSomeText\nMoreText\n```\nMore Text here"
+const TestString2 = "Text Here\n```\nSomeText\nMoreText\n```\nMore Text here"
 const TestBlock1 = "```yml\nwtv\n```"
 const TestBlock2 = "```\nwtv\n```"
 
@@ -20,11 +20,11 @@ func blockIsEqual(b1, b2 SourceBlock) (isEqual bool, err error) {
 	var tErrM, cErrM string
 
 	if !tEqual {
-		tErrM = fmt.Sprintf("Block Type not Equal:\n%s \n!=\n%s", b1.T, b2.T)
+		tErrM = fmt.Sprintf("Block Type not Equal:\n%s\n!=\n%s", b1.T, b2.T)
 	}
 
 	if !cEqual {
-		cErrM = fmt.Sprintf("Block content not equal:\n%s !=\n%s", b1.Content, b2.Content)
+		cErrM = fmt.Sprintf("Block Content not equal:\n%s\n!=\n%s", b1.Content, b2.Content)
 	}
 
 	err = fmt.Errorf(tErrM + cErrM)
@@ -82,10 +82,10 @@ func TestParseBlock2(t *testing.T) {
 
 func TestExtractBlocksFromFileSingle(t *testing.T) {
 	var result [4]SourceBlock
-	result[0] = SourceBlock{T: "python", Content: "Python code line 1\n Python code line 2"}
-	result[1] = SourceBlock{T: "yaml", Content: "something:\n - here\n - here"}
+	result[0] = SourceBlock{T: "python", Content: "Python code line 1\nPython code line 2"}
+	result[1] = SourceBlock{T: "yaml", Content: "something:\n    - here\n    - here"}
 	result[2] = SourceBlock{T: "", Content: "Unknown Format"}
-	result[3] = SourceBlock{T: "python", Content: "Python code line 3\n Python code line 4"}
+	result[3] = SourceBlock{T: "python", Content: "Python code line 3\nPython code line 4"}
 	
 	path := filepath.Join("..", "test", "fixtures", "test.md")
 	blocks, err := ExtractBlocksFromFile(path)
@@ -97,13 +97,14 @@ func TestExtractBlocksFromFileSingle(t *testing.T) {
 		t.Errorf("Expected 4 blocks, but got %d", n_blocks)
 	}
 
+	var b SourceBlock
 	for i, r := range result {
-		b := blocks[i]
+		b = blocks[i]
 		be, err := blockIsEqual(r, b)
 		if !be {
 			t.Error(err)
+			fmt.Printf("\n%q\n%q\n", r.Content, b.Content)
 		}
-
 	}
 }
 

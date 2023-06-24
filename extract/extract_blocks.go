@@ -45,7 +45,8 @@ func ExtractBlocks(f []byte) (blocks []SourceBlock, err error) {
 	re := regexp.MustCompile("```[\\w\\W]*?```")
 	var s SourceBlock
 	for _, m := range re.FindAll(f, -1) {
-		s = ParseBlock(string(m))
+		cleanF := strings.ReplaceAll(string(m), "\r", "")
+		s = ParseBlock(cleanF)
 		blocks = append(blocks, s)
 	}
 	return
