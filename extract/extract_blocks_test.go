@@ -3,8 +3,8 @@ package extract
 import (
 	"testing"
 	"path/filepath"
-	"reflect"
 )
+
 
 func TestExtractBlocksFromFileSingle(t *testing.T) {
 	var result [4]SourceBlock
@@ -23,8 +23,9 @@ func TestExtractBlocksFromFileSingle(t *testing.T) {
 		t.Errorf("Expected 4 blocks, but got %d", n_blocks)
 	}
 
-	for i := range result {
-		if reflect.DeepEqual(result[i],  blocks[i]) {
+	for i, r := range result {
+		b := blocks[i]
+		if b.T != r.T || b.Content != r.Content {
 			t.Errorf("Results do not match. Expected: %+v but found %+v", result[i], blocks[i])			
 		}
 	}
@@ -46,9 +47,11 @@ func TestExtractBlocksFromFileJoined(t *testing.T) {
 		t.Errorf("Expected 3 blocks, but got %d", n_blocks)
 	}
 
-	for i := range result {
-		if reflect.DeepEqual(result[i],  blocks[i]) {
+	for i, r := range result {
+		b := blocks[i]
+		if b.T != r.T || b.Content != r.Content {
 			t.Errorf("Results do not match. Expected: %+v but found %+v", result[i], blocks[i])			
 		}
 	}
+
 }
