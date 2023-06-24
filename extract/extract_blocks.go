@@ -52,10 +52,27 @@ func ExtractBlocks(f []byte) (blocks []SourceBlock, err error) {
 	return
 }
 
-// Given a list of blocks, concatenate the blocks of the same type
 func ConcatenateBlocks(blocks []SourceBlock) (concatenatedBlocks []SourceBlock) {
-	return blocks
+	blockTypeMap := make(map[string]SourceBlock)
+
+	for _, b := range blocks {
+		if v, ok := blockTypeMap[b.T]; ok {
+			v.Content += "\n" + b.Content
+			blockTypeMap[b.T] = v // Assign the updated value back to the map
+		} else {
+			blockTypeMap[b.T] = b
+		}
+	}
+
+	// Create an array of the map values
+	concatenatedBlocks = make([]SourceBlock, 0, len(blockTypeMap))
+	for _, v := range blockTypeMap {
+		concatenatedBlocks = append(concatenatedBlocks, v)
+	}
+
+	return
 }
+
 
 // Extracts all code blocks from a given file
 func ExtractBlocksFromFile(filePath string, joinBlocks bool) (blocks []SourceBlock, err error) {
@@ -68,6 +85,7 @@ func ExtractBlocksFromFile(filePath string, joinBlocks bool) (blocks []SourceBlo
 		log.Printf("Failed to extract blocks on file %s", filePath)
 	}
 
+	//TODO: This parse if very badly implemented
 	if joinBlocks{
 		blocks = ConcatenateBlocks(blocks)
 	}
