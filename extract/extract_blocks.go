@@ -52,8 +52,13 @@ func ExtractBlocks(f []byte) (blocks []SourceBlock, err error) {
 	return
 }
 
+// Given a list of blocks, concatenate the blocks of the same type
+func ConcatenateBlocks(blocks []SourceBlock) (concatenatedBlocks []SourceBlock) {
+	return blocks
+}
+
 // Extracts all code blocks from a given file
-func ExtractBlocksFromFile(filePath string) (blocks []SourceBlock, err error) {
+func ExtractBlocksFromFile(filePath string, joinBlocks bool) (blocks []SourceBlock, err error) {
 	data, err := os.ReadFile(filePath)
 	if err != nil {
 		log.Printf("Could not read file %s", filePath)
@@ -61,6 +66,10 @@ func ExtractBlocksFromFile(filePath string) (blocks []SourceBlock, err error) {
 	blocks, err = ExtractBlocks(data)
 	if err != nil {
 		log.Printf("Failed to extract blocks on file %s", filePath)
+	}
+
+	if joinBlocks{
+		blocks = ConcatenateBlocks(blocks)
 	}
 
 	return
