@@ -124,8 +124,8 @@ func TestConcatenateBlocks(t *testing.T) {
 
 func TestExtractBlocksFromFileJoined(t *testing.T) {
 	var result [3]SourceBlock
-	result[0] = SourceBlock{T: "python", Content: "Python code line 1\n Python code line 2\n Python code line 3\n Python code line 4"}
-	result[1] = SourceBlock{T: "yaml", Content: "something:\n - here\n - here"}
+	result[0] = SourceBlock{T: "python", Content: "Python code line 1\nPython code line 2\nPython code line 3\nPython code line 4"}
+	result[1] = SourceBlock{T: "yaml", Content: "something:\n    - here\n    - here"}
 	result[2] = SourceBlock{T: "", Content: "Unknown Format"}
 	
 	path := filepath.Join("..", "test", "fixtures", "test.md")
