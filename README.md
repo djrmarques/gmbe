@@ -2,7 +2,9 @@
 Cli tool to extract code blocks from Readme files, saves them onto separate files.
 
 # Why
-This tools makes it easy to check code blocks inside markdown files. 
+Go Markdown Block Extractor will extract all the codeblocks from markdown files and save them as their own separate files.
+This allows to run checks like linting, formating or any other custom checks to make sure that the code blocks in the markdown files,
+which most likely are some sort of documentation, are actually valid. 
 
 # Instalation
 First, install the [go programming language](https://go.dev/doc/install). 
