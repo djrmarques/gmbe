@@ -1,7 +1,7 @@
 name: Auto Tagging
 
 permissions:
-  releases: write
+  deployments: write
   
 on:
   workflow_dispatch:
