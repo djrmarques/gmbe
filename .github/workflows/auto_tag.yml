@@ -2,6 +2,7 @@ name: Auto Tagging
 
 permissions:
   deployments: write
+  read: all
   
 on:
   workflow_dispatch:
