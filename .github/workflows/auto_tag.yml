@@ -1,5 +1,8 @@
 name: Auto Tagging
 
+permissions:
+  releases: write
+  
 on:
   workflow_dispatch:
   push:
