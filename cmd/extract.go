@@ -12,24 +12,9 @@ import (
 	"log"
 )
 
-// extractCmd represents the extract command
-var extractCmd = &cobra.Command{
-	Use:   "extract",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// Unpack flags
-		flags := cmd.Flags()
-		f, _ := flags.GetString("file")
-		o, _ := flags.GetString("output-path")
-		j, _ := flags.GetBool("join-blocks")
-
-		// Check if a file exists
+// Extracts all the blocks from a given file into various files
+func extractToFile(f, o string, j bool) {
+			// Check if a file exists
 		fExists, err := ValidateFileExists(f)
 		if !fExists {
 			log.Fatalf("File %s does not exist", f)
@@ -69,6 +54,27 @@ to quickly create a Cobra application.`,
 			CreateEmptyFile(outputFilePath)
 			FailIfError(WriteStringToFile(outputFilePath, b.Content))
 		}
+
+}
+
+// extractCmd represents the extract command
+var extractCmd = &cobra.Command{
+	Use:   "extract",
+	Short: "A brief description of your command",
+	Long: `A longer description that spans multiple lines and likely contains examples
+and usage of using your command. For example:
+
+Cobra is a CLI library for Go that empowers applications.
+This application is a tool to generate the needed files
+to quickly create a Cobra application.`,
+	Run: func(cmd *cobra.Command, args []string) {
+		// Unpack flags
+		flags := cmd.Flags()
+		f, _ := flags.GetString("file")
+		o, _ := flags.GetString("output-path")
+		j, _ := flags.GetBool("join-blocks")
+
+		extractToFile(f, o, j)
 	},
 }
 
