@@ -1,9 +1,5 @@
 name: Auto Tagging
 
-permissions:
-  deployments: write
-  read-all
-  
 on:
   workflow_dispatch:
   push:
@@ -12,6 +8,10 @@ on:
     paths:
       - .version
 
+permissions:
+  deployments: write
+  read-all
+      
 jobs:
   tag:
     runs-on: ubuntu-latest
