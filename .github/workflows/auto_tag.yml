@@ -2,7 +2,7 @@ name: Auto Tagging
 
 permissions:
   deployments: write
-  read: all
+  read-all
   
 on:
   workflow_dispatch:
@@ -34,3 +34,8 @@ jobs:
         run: |
           git tag ${{ steps.get_version.outputs.version }}
           git push origin ${{ steps.get_version.outputs.version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+          
