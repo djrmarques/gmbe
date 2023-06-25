@@ -1,0 +1,31 @@
+name: Auto Tagging
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .version
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Get version from file
+        id: get_version
+        run: echo "::set-output name=version::$(cat .version)"
+
+      - name: Create tag
+        id: create_tag
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.get_version.outputs.version }}
+          release_name: Release ${{ steps.get_version.outputs.version }}
+          draft: false
+          prerelease: false
