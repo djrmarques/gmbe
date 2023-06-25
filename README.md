@@ -26,7 +26,7 @@ gmbe --help
 Use the following command:
 
 ```sh
-gmbe -f Readme.md
+gmbe extract -f Readme.md
 ```
 
 This command will create a folder called `Readme`, and inside there will be files with the code blocks.
@@ -36,12 +36,12 @@ There are a few usage flags that can be used:
 
 It's possible to specify the output folder with:
 ``` sh
-gmbe -o folder -f Readme.md # This will save the files inside this folder
+gmbe extract  -o folder -f Readme.md # This will save the files inside this folder
 ```
 
 It's also possible to join all the codeblocks of the same type inside the same file
 ``` sh
-gmbe -j -f Readme.md # This will join all code blocks of the same type in the same file
+gmbe extract -j -f Readme.md # This will join all code blocks of the same type in the same file
 ```
 
 
