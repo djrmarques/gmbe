@@ -6,7 +6,10 @@ package cmd
 import (
 	"os"
 	"github.com/spf13/cobra"
+	"fmt"
 )
+
+var version string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -18,7 +21,17 @@ This allows to run checks like linting, formating or any other custom checks to 
 `,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) {},
+	Run: func(cmd *cobra.Command, args []string) {
+		flags := cmd.Flags()
+		v, _ := flags.GetBool("version")
+
+		if v {
+			versionString := fmt.Sprintf("gmbe version %s", version)
+			fmt.Println(versionString)
+		}
+
+	},
+	
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -39,6 +52,8 @@ func init() {
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
+	rootCmd.Flags().Bool("version", false, "Display the version number")
+
 }
 
 

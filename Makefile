@@ -1,7 +1,5 @@
+VERSION := $(shell cat .version)
+
 .PHONY: build
 build: 
-	go build .
-
-.PHONY: test
-test:
-	go test ./...
+	go build -ldflags "-X github.com/djrmarques/gmbe/cmd.version=$(VERSION)"
