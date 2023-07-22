@@ -1,6 +1,7 @@
 package extract
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"regexp"
@@ -40,7 +41,7 @@ func ParseBlock(b string) (block SourceBlock) {
 
 }
 
-// Given a file, exctract all source blocks
+// Given a file, extract all source blocks
 func ExtractBlocks(f []byte) (blocks []SourceBlock, err error) {
 	re := regexp.MustCompile("```[\\w\\W]*?```")
 	var s SourceBlock
@@ -52,6 +53,7 @@ func ExtractBlocks(f []byte) (blocks []SourceBlock, err error) {
 	return
 }
 
+// Given a list of source blocks, concatenate all blocks of the same type
 func ConcatenateBlocks(blocks []SourceBlock) (concatenatedBlocks []SourceBlock) {
 	blockTypeMap := make(map[string]SourceBlock)
 
@@ -78,17 +80,18 @@ func ConcatenateBlocks(blocks []SourceBlock) (concatenatedBlocks []SourceBlock) 
 func ExtractBlocksFromFile(filePath string, joinBlocks bool) (blocks []SourceBlock, err error) {
 	data, err := os.ReadFile(filePath)
 	if err != nil {
-		log.Printf("Could not read file %s", filePath)
+		return nil, fmt.Errorf("Could not read file %s", filePath)
 	}
 	blocks, err = ExtractBlocks(data)
 	if err != nil {
-		log.Printf("Failed to extract blocks on file %s", filePath)
+		return nil, fmt.Errorf("Failed to extract blocks on file %s", filePath)
 	}
 
 	//TODO: This parse if very badly implemented
 	if joinBlocks{
+		log.Print("Concatenating blocks.")
 		blocks = ConcatenateBlocks(blocks)
 	}
 
-	return
+	return blocks, nil
 }
