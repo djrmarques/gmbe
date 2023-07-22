@@ -13,7 +13,7 @@ var version string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "gmbe extract path/to/file.md",
+	Use:   "gmbe extract -f path/to/file.md",
 	Short: "Extract code blocks from Markdown files",
 	Long: `
 Go Markdown Block Extractor will extract all the codeblocks from markdown files and save them as their own separate files.
