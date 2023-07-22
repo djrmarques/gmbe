@@ -12,13 +12,10 @@ import (
 // extractCmd represents the extract command
 var extractCmd = &cobra.Command{
 	Use:   "extract",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Extracts the code blocks from a certain file",
+	Long: `Use this command to extract code blocks from various markdown blocks.
+By default, this command will create a folder with the same name of the file where it will store the code blocks.
+It is also possible to specify an output directory, and to group all code blocks of the same type on the same file.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// Unpack flags
 		flags := cmd.Flags()
