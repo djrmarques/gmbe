@@ -7,3 +7,7 @@ build:
 .PHONY: test
 test:
 	go test ./...
+
+.PHONY: tag-commit
+tag-commit:
+	git tag $(VERSION)
